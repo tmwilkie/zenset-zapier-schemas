@@ -59,11 +59,15 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["description", "item_price", "category"],
+        "required": ["description", "item_url", "item_price", "category"],
         "properties": {
           "description": {
             "type": "string",
             "description": "Full product title, cleaned of redundant marketing fluff but preserving brand, model, size, and count."
+          },
+          "item_url": {
+            "type": "string",
+            "description": "The clean Amazon product URL in the format https://www.amazon.com/dp/ASIN. Strip all tracking parameters (?ref=, ?tag=, etc.). If no URL is available, use an empty string."
           },
           "item_price": {
             "type": "string",
