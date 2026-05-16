@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AmazonOrderExtraction",
+  "description": "Structured output schema for parsing Amazon order confirmation emails into Zenset Retreats' order tracker.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "order_date",
+    "order_number",
+    "ship_to",
+    "placed_by",
+    "order_total",
+    "status",
+    "items"
+  ],
+  "properties": {
+    "order_date": {
+      "type": "string",
+      "description": "The date the order was placed, formatted as YYYY-MM-DD."
+    },
+    "order_number": {
+      "type": "string",
+      "description": "The Amazon order number, including dashes. Format: 111-XXXXXXX-XXXXXXX."
+    },
+    "ship_to": {
+      "type": "string",
+      "description": "The recipient name from the Ship to section, deduplicated. Use an em dash for cancelled orders with no ship-to."
+    },
+    "placed_by": {
+      "type": "string",
+      "description": "The name of the person who placed the order, deduplicated."
+    },
+    "order_total": {
+      "type": "string",
+      "description": "Order total as a string with dollar sign and two decimals (e.g., $53.95). Use $0.00 for cancelled orders."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Arriving Sunday",
+        "Arriving Monday",
+        "Arriving Tuesday",
+        "Arriving Wednesday",
+        "Arriving Thursday",
+        "Arriving Friday",
+        "Arriving Saturday",
+        "Delivered",
+        "Cancelled",
+        "Returned",
+        "Refunded",
+        "Shipped"
+      ],
+      "description": "The current status of the order."
+    },
+    "items": {
+      "type": "array",
+      "description": "One entry per product in the order. Even single-item orders return an array.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["description", "item_price", "category"],
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Full product title, cleaned of redundant marketing fluff but preserving brand, model, size, and count."
+          },
+          "item_price": {
+            "type": "string",
+            "description": "Item price as a string with dollar sign and two decimals (e.g., $37.49). Use $0.00 for cancelled orders."
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "Guest Consumables",
+              "Cleaning Supplies",
+              "Linens & Textiles",
+              "Kitchen Essentials",
+              "Guest Experience Extras",
+              "Safety & Compliance",
+              "Maintenance / Back-Stock"
+            ],
+            "description": "Supply category classification."
+          }
+        }
+      }
+    }
+  }
+}
