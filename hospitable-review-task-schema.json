@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "guest_first_name",
+    "property_name",
+    "checkout_date_iso",
+    "checkout_plus_12_days_iso"
+  ],
+  "properties": {
+    "guest_first_name": {
+      "type": "string",
+      "description": "The guest's first name. Find it in the email subject after 'Message sent to' or in the email body after 'A scheduled message was sent to'."
+    },
+    "property_name": {
+      "type": "string",
+      "description": "The full property name. Find it in the email body after 'who stayed at' and before 'from'."
+    },
+    "checkout_date_iso": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "The date the guest checked out, in YYYY-MM-DD format. Find it in the email body after 'to' in the phrase 'from [date] to [date]'. Use year 2026 unless the email explicitly indicates otherwise."
+    },
+    "checkout_plus_12_days_iso": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "The checkout date plus exactly 12 calendar days, in YYYY-MM-DD format. Calculate carefully, handling month and year boundaries correctly (e.g., May 25 + 12 days = June 6; Dec 28 + 12 days = January 9 of the following year)."
+    }
+  }
+}
