@@ -4,6 +4,8 @@
   "required": [
     "guest_first_name",
     "property_name",
+    "property_full_address",
+    "property_folder_name",
     "checkout_date_iso",
     "checkout_plus_12_days_iso"
   ],
@@ -14,7 +16,15 @@
     },
     "property_name": {
       "type": "string",
-      "description": "The full property name. Find it in the email body after 'who stayed at' and before 'from'."
+      "description": "The full property listing nickname, verbatim from the email body. Find it after 'who stayed at' and before 'from'. Example: 'Spacious 3BR Near UTSA & Six Flags – Sleeps 10'."
+    },
+    "property_full_address": {
+      "type": "string",
+      "description": "The full street address of the property, derived from the property mapping table in the user message. Example: '214 Adelaide Oaks, San Antonio, TX 78249'. If the listing nickname is not in the mapping table, return the empty string."
+    },
+    "property_folder_name": {
+      "type": "string",
+      "description": "The ClickUp folder name for this property, derived from the property mapping table in the user message. This is the short street name only (e.g., 'Adelaide Oaks'), not the full address. If the listing nickname is not in the mapping table, return the empty string."
     },
     "checkout_date_iso": {
       "type": "string",
